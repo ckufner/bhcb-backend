@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    image: bhcb-backend:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+#    environment:
+#      - spring.datasource.url=jdbc:mariadb://localhost:3306/bhcb?rewriteBatchedStatements=true
+#
+#  database:
+#    image: mariadb:10.7
+#    restart: unless-stopped
+#    ports:
+#      - 3306:3306
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: bhcb
+#      MYSQL_USER: bhcb
+#      MYSQL_PASSWORD: bhcb
+#    volumes:
+#      - db-data:/var/lib/mysql
+#      - ./mariadb/config:/etc/mysql/conf.d
+#volumes:
+#  db-data:
