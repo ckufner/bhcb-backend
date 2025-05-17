@@ -45,7 +45,7 @@ class UsersController
     )
     @Operation(summary = "search users")
     public ResponseEntity<Object> getUsers(
-            @RequestParam String query,
+            @RequestParam(required = false) String query,
             PagingRequestParameter pagingRequestParameter
     )
     {
