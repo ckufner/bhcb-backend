@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.io.IOException;
 
 @ControllerAdvice
-public class BhcpResponseEntityExceptionHandler extends ResponseEntityExceptionHandler
+public class BhcbResponseEntityExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(NotFoundException.class)
     public void handleNotFound(HttpServletResponse response) throws IOException
