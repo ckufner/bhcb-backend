@@ -1,0 +1,11 @@
+.idea
+mariadb
+.gitattributes
+.gitignore
+*.iml
+*.sh
+compose.dev.yml
+compose.yml
+Dockerfile
+HELP.md
+LICENSE
