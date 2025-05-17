@@ -44,7 +44,7 @@ class UserServiceImpl implements UserService
             return this.userRepository.search(query, pageable);
         }
 
-        return userRepository.getSliced(pageable);
+        return userRepository.getByVisible(true, pageable);
     }
 
     @Override
@@ -65,6 +65,7 @@ class UserServiceImpl implements UserService
                 .orElseThrow(() -> new NotFoundException("could not find user"));
 
         existingUser.setEmail(updateModel.getEmail());
+        existingUser.setVisible(updateModel.getVisible());
         existingUser.setName(updateModel.getName());
         existingUser.setDescription(updateModel.getDescription());
         existingUser.setImageUrl(updateModel.getImageUrl());

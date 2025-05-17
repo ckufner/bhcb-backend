@@ -13,6 +13,12 @@ public final class UserDto implements Serializable
     @Schema(description = "Id of user")
     private String id;
 
+    @Schema(description = "E-Mail of user")
+    private String email;
+
+    @Schema(description = "Visibility of user user")
+    private boolean visible;
+
     @Schema(description = "Name of user")
     private String name;
 

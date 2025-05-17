@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.search.engine.search.sort.dsl.SortOrder;
 import org.hibernate.search.mapper.orm.Search;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -31,19 +30,12 @@ class UserSearchRepositoryImpl implements UserSearchRepository
         var searchSession = Search.session(this.entityManager);
 
         var searchResult = searchSession.search(User.class)
-                .where(f -> f.match()
-                        .fields("name", "team.name", "skills.name")
-                        .matching(query)
-                ).sort(f -> f.composite(b ->
-                {
-                    if (pageable.getSort() != null)
-                    {
-                        pageable.getSort().get().forEach(s ->
-                        {
-                            b.add(f.field(s.getProperty()).order(s.isAscending() ? SortOrder.ASC : SortOrder.DESC));
-                        });
-                    }
-                }))
+                .where(f ->
+                        f.bool()
+                                .must(f.match().fields("name", "team.name", "skills.name").matching(query))
+                                .mustNot(f.match().field("visible").matching(Boolean.FALSE))
+                )
+                .sort(f -> f.field("id").asc())
                 .fetch(
                         pageable.getPageNumber() * pageable.getPageSize(),
                         pageable.getPageSize() + 1

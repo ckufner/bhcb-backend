@@ -17,7 +17,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.search.engine.backend.types.Searchable;
+import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
@@ -36,6 +39,7 @@ import java.util.Set;
 @Indexed
 public class User
 {
+    @GenericField(searchable = Searchable.YES, sortable = Sortable.YES)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(
@@ -51,6 +55,12 @@ public class User
     @Getter
     @Setter
     private String email;
+
+    @GenericField(searchable = Searchable.YES)
+    @Column(nullable = false)
+    @Getter
+    @Setter
+    private Boolean visible = true;
 
     @FullTextField
     @Getter
