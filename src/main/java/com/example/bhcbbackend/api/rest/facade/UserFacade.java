@@ -13,4 +13,6 @@ public interface UserFacade
     UserSliceDto getUsers(String query, PagingRequestParameter pagingRequestParameter);
 
     List<UserDto> getByTeamId(String id);
+
+    UserDto update(String id, UserDto dto);
 }

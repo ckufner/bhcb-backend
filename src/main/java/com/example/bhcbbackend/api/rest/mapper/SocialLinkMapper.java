@@ -20,4 +20,19 @@ public interface SocialLinkMapper
 
         return result;
     }
+
+    default ArrayList<SocialLink> asModels(List<String> dtos)
+    {
+        var result = new ArrayList<SocialLink>(dtos.size());
+
+        for (var dto : dtos)
+        {
+            var link = new SocialLink();
+            link.setUrl(dto);
+
+            result.add(link);
+        }
+
+        return result;
+    }
 }

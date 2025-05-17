@@ -47,7 +47,7 @@ public class User
     @Setter(value = AccessLevel.PACKAGE)
     private Long id;
 
-    @NaturalId
+    @NaturalId(mutable = true)
     @Getter
     @Setter
     private String email;
@@ -108,6 +108,37 @@ public class User
         return this;
     }
 
+    public User replaceSocialLinks(List<SocialLink> socialLinks)
+    {
+        this.removeAllSocialLinks();
+        this.addSocialLinks(socialLinks);
+
+        return this;
+    }
+
+    public User addSocialLinks(List<SocialLink> socialLinks)
+    {
+        for (var socialLink : socialLinks)
+        {
+            this.socialLinks.add(socialLink);
+            socialLink.setUser(this);
+        }
+
+        return this;
+    }
+
+    public User removeAllSocialLinks()
+    {
+        for (var socialLink : this.socialLinks)
+        {
+            socialLink.setUser(null);
+        }
+
+        this.socialLinks.clear();
+
+        return this;
+    }
+
     public User addSkill(Skill skill)
     {
         this.skills.add(skill);
@@ -120,6 +151,37 @@ public class User
     {
         this.skills.remove(skill);
         skill.getUsers().remove(this);
+
+        return this;
+    }
+
+    public User replaceSkills(Set<Skill> skills)
+    {
+        this.removeAllSkills();
+        this.addSkills(skills);
+
+        return this;
+    }
+
+    public User addSkills(Set<Skill> skills)
+    {
+        for (var skill : skills)
+        {
+            this.skills.add(skill);
+            skill.getUsers().add(this);
+        }
+
+        return this;
+    }
+
+    public User removeAllSkills()
+    {
+        for (var skill : this.skills)
+        {
+            skill.getUsers().remove(this);
+        }
+
+        this.skills.clear();
 
         return this;
     }

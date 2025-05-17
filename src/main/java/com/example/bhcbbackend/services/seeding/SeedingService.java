@@ -34,7 +34,8 @@ class SeedingService implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event)
     {
-        if(userRepository.count() > 0){
+        if (userRepository.count() > 0)
+        {
             log.info("users already seeded");
             return;
         }
@@ -103,7 +104,8 @@ class SeedingService implements ApplicationListener<ContextRefreshedEvent>
                 }
             }
 
-            if(!teams.isEmpty()){
+            if (!teams.isEmpty())
+            {
                 teamRepository.persistAll(teams.values());
             }
 

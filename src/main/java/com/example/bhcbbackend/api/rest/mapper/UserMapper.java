@@ -28,4 +28,6 @@ public interface UserMapper
 
         return dto;
     }
+
+    User asModel(UserDto dto);
 }

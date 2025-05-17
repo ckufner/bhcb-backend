@@ -13,4 +13,6 @@ public interface UserService
     Slice<User> getUsers(String query, Pageable pageable);
 
     List<User> getByTeamId(long id);
+
+    User update(long id, User updateModel);
 }

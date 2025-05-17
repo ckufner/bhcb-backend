@@ -53,4 +53,19 @@ class UserFacadeImpl implements UserFacade
             );
         });
     }
+
+    @Override
+    public UserDto update(final String id, final UserDto dto)
+    {
+        var updateModel = this.userMapper.asModel(dto);
+        return this.transactionService.execute(() ->
+        {
+            return this.userMapper.asDto(
+                    this.userService.update(
+                            Long.valueOf(id),
+                            updateModel
+                    )
+            );
+        });
+    }
 }

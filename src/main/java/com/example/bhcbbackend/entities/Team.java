@@ -14,9 +14,9 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(
         name = "Team"
@@ -47,7 +47,7 @@ public class Team
     @OneToMany(mappedBy = "team")
     @Getter
     @Setter(value = AccessLevel.PACKAGE)
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
     public Team addUser(User user)
     {
