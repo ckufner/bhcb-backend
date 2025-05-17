@@ -10,17 +10,6 @@ ARG ARG_SPRING_BOOT_DIRECTORY=/opt/server
 ARG ARG_SPRING_BOOT_LAUNCHER=org.springframework.boot.loader.launch.JarLauncher
 
 ################################################################################
-# build the application
-################################################################################
-FROM eclipse-temurin:${ARG_JAVA_VERSION}-jdk-jammy as compiler
-
-ARG ARG_JAVA_VERSION
-
-WORKDIR workdir
-COPY . .
-RUN ./mvnw clean compile package
-
-################################################################################
 # create application layers
 ################################################################################
 FROM eclipse-temurin:${ARG_JAVA_VERSION}-jdk-jammy as layered-app
@@ -28,7 +17,7 @@ FROM eclipse-temurin:${ARG_JAVA_VERSION}-jdk-jammy as layered-app
 ARG ARG_JAVA_VERSION
 
 WORKDIR workdir
-COPY --from=compiler workdir/target/bhcb-backend.jar app.jar
+COPY target/bhcb-backend.jar app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
 
 ################################################################################
@@ -39,7 +28,7 @@ FROM eclipse-temurin:${ARG_JAVA_VERSION}-jdk as jre-builder
 ARG ARG_JAVA_VERSION
 
 WORKDIR workdir
-COPY --from=compiler workdir/target/bhcb-backend.jar app.jar
+COPY target/bhcb-backend.jar app.jar
 
 RUN set -ex \
     && jar xf app.jar \
