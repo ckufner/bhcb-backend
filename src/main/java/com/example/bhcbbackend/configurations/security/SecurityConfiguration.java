@@ -1,5 +1,6 @@
 package com.example.bhcbbackend.configurations.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +18,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 class SecurityConfiguration
 {
+    private final CustomCorsConfiguration customCorsConfiguration;
+
     @Bean
     SecurityFilterChain filterChain(
             HttpSecurity http,
@@ -26,7 +30,8 @@ class SecurityConfiguration
     ) throws Exception
     {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(c -> c.configurationSource(customCorsConfiguration));
 //                .authorizeHttpRequests(auth ->
 //                        auth.requestMatchers(AntPathRequestMatcher.antMatcher(managementEndpointsWebBasePath + "/**")).permitAll()
 //                                .requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**"))
